@@ -13,6 +13,7 @@
             --text-muted: #6b7a99;
             --cyan-accent: #1ec8ff;
             --btn-blue: #0294b3;
+            --purple-accent: #7b2cbf;
         }
 
         body {
@@ -21,7 +22,7 @@
             font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             margin: 0;
             padding: 0;
-            padding-bottom: 80px;
+            padding-bottom: 90px;
             user-select: none;
         }
 
@@ -58,6 +59,7 @@
             display: block;
         }
 
+        /* Power & Cards */
         .power-card {
             background: var(--card-bg);
             border-radius: 20px;
@@ -135,7 +137,119 @@
         .timer-btn.pause-mode {
             border: 1px solid #ff4d4d;
             color: #ff4d4d;
-        }/* Input Feld Styling */
+        }/* List Items (Leaderboard / Tasks) */
+        .list-item {
+            background: var(--dark-card);
+            padding: 15px;
+            border-radius: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid #131c2e;
+            margin-bottom: 8px;
+        }
+        .user-lead-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .lead-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #1f2c45;
+        }
+
+        /* Leaderboard Podiums */
+        .podium-container {
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-end;
+            margin: 30px 0;
+            padding-top: 20px;
+        }
+        .podium-user {
+            text-align: center;
+            width: 30%;
+            position: relative;
+        }
+        .podium-avatar-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+        .podium-avatar {
+            width: 65px;
+            height: 65px;
+            border-radius: 50%;
+            border: 3px solid #ffb703;
+            object-fit: cover;
+        }
+        .podium-crown {
+            position: absolute;
+            top: -22px; left: 50%;
+            transform: translateX(-50%);
+            font-size: 20px;
+        }
+        .podium-badge {
+            position: absolute;
+            bottom: -5px; right: -5px;
+            background: #ffb703;
+            border-radius: 50%;
+            width: 20px; height: 20px;
+            font-size: 11px;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .podium-box {
+            margin-top: 10px;
+            padding: 15px 5px;
+            border-radius: 12px;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        /* Referral System */
+        .ref-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .ref-box {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.05);
+            padding: 15px 5px;
+            border-radius: 15px;
+            text-align: center;
+        }
+        .ref-stats-bar {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            background: rgba(0,0,0,0.2);
+            padding: 12px 5px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-size: 12px;
+            text-align: center;
+        }
+
+        /* Shop Grid */
+        .shop-stats {
+            background: rgba(0,0,0,0.3);
+            border-radius: 14px;
+            padding: 20px;
+            text-align: left;
+            margin: 20px 0;
+        }
+        .shop-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .shop-row:last-child { border-bottom: none; }
+
+        /* Inputs & Modals */
         .wallet-input {
             width: 100%;
             background: #131c2e;
@@ -149,39 +263,12 @@
             margin-bottom: 15px;
             text-align: center;
         }
-        .wallet-input:focus {
-            outline: none;
-            border-color: var(--cyan-accent);
-        }
-
-        .bottom-nav {
-            position: fixed;
-            bottom: 0; left: 0; right: 0;
-            background: #09101d;
-            display: flex;
-            justify-content: space-around;
-            padding: 10px 0;
-            border-top: 1px solid #131c2e;
-        }
-        .nav-item {
-            color: var(--text-muted);
-            font-size: 11px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 4px;
-            cursor: pointer;
-            background: none; border: none;
-            width: 20%;
-        }
-        .nav-item.active { color: var(--cyan-accent); }
-        .nav-icon { font-size: 20px; }
+        .wallet-input:focus { outline: none; border-color: var(--cyan-accent); }
 
         .modal-overlay {
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0,0,0,0.8);
-            display: none;
+            background: rgba(0,0,0,0.8);display: none;
             align-items: center;
             justify-content: center;
             padding: 20px;
@@ -197,11 +284,32 @@
             border: 1px solid #1f2c45;
             position: relative;
         }
-        .close-btn {
-            position: absolute;
-            top: 15px; right: 15px;
-            background: none; border: none; color: white; font-size: 20px; cursor: pointer;
+        .close-btn { position: absolute; top: 15px; right: 15px; background: none; border: none; color: white; font-size: 20px; cursor: pointer; }
+
+        /* Navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0; left: 0; right: 0;
+            background: #09101d;
+            display: flex;
+            justify-content: space-around;
+            padding: 12px 0;
+            border-top: 1px solid #131c2e;
+            z-index: 90;
         }
+        .nav-item {
+            color: var(--text-muted);
+            font-size: 11px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            cursor: pointer;
+            background: none; border: none;
+            width: 20%;
+        }
+        .nav-item.active { color: var(--cyan-accent); }
+        .nav-icon { font-size: 20px; }
     </style>
 </head>
 <body>
@@ -248,16 +356,87 @@
 
             <button class="btn-action timer-btn" id="timer-status-btn" disabled>
                 🕒 05:00:00
-            </button><button class="btn-action" style="width: 100%; background: transparent; border: 2px solid #0294b3;" onclick="triggerSwapWithAd()">
+            </button>
+
+            <button class="btn-action" style="width: 100%; background: transparent; border: 2px solid #0294b3;" onclick="triggerSwapWithAd()">
                 🔂 SWAP HASHES
             </button>
         </div>
     </div>
 
-    <div id="tab-shop" class="tab-content"><h2>Shop</h2></div>
-    <div id="tab-rank" class="tab-content"><h2>Leaderboard</h2></div>
-    <div id="tab-team" class="tab-content"><h2>Team</h2></div>
-    <div id="tab-tasks" class="tab-content"><h2>Tasks</h2></div>
+    <div id="tab-shop" class="tab-content">
+        <center>
+            <div style="font-size: 50px; margin-top: 20px;">⚙️</div>
+            <h1 style="font-size: 42px; margin: 10px 0 5px 0; font-weight: 800;">100K</h1>
+            <div style="color: var(--cyan-accent); font-weight: bold; letter-spacing: 2px; font-size: 14px; margin-bottom: 20px;">POWER</div>
+        </center><div class="list-item">
+            <div class="user-lead-info">
+                <span style="color: var(--text-muted); font-weight: bold; width: 20px;">#4</span>
+                <div class="avatar" style="background: #10b981;">VM</div>
+                <div><strong>V🥦Grila 🐝Bee Empire</strong><br><small style="color: var(--text-muted);">@Vgrila</small></div>
+            </div>
+            <div style="color: var(--cyan-accent); font-weight: bold;">1.0M</div>
+        </div>
+        <div class="list-item">
+            <div class="user-lead-info">
+                <span style="color: var(--text-muted); font-weight: bold; width: 20px;">#5</span>
+                <div class="avatar" style="background: #3b82f6;">A</div>
+                <div><strong>Ale</strong><br><small style="color: var(--text-muted);">@Alempxl</small></div>
+            </div>
+            <div style="color: var(--cyan-accent); font-weight: bold;">604.5K</div>
+        </div>
+    </div>
+
+    <div id="tab-team" class="tab-content">
+        <div class="power-card" style="text-align: left; background: var(--dark-card); border: 1px solid #131c2e;">
+            <h1 style="font-size: 32px; font-weight: 800; margin: 0 0 20px 0; line-height: 1.2;">Your Referral<br>Rewards</h1>
+            
+            <div class="ref-grid">
+                <div class="ref-box">
+                    <span style="font-size: 18px;">⭐</span>
+                    <div style="font-weight: bold; margin-top: 5px; font-size: 14px;">+4,000</div>
+                    <small style="color: var(--text-muted); font-size: 9px;">POWER premium</small>
+                </div>
+                <div class="ref-box">
+                    <span style="font-size: 18px;">👤</span>
+                    <div style="font-weight: bold; margin-top: 5px; font-size: 14px;">+2,000</div>
+                    <small style="color: var(--text-muted); font-size: 9px;">POWER per referral</small>
+                </div>
+                <div class="ref-box">
+                    <span style="font-size: 18px;">%</span>
+                    <div style="font-weight: bold; margin-top: 5px; font-size: 14px;">15%</div>
+                    <small style="color: var(--text-muted); font-size: 9px;">COMM on purchases</small>
+                </div>
+            </div>
+
+            <div class="ref-stats-bar">
+                <div><b style="font-size: 14px;">0</b><br><small style="color:var(--text-muted); font-size:9px;">REFERRED</small></div>
+                <div><b style="font-size: 14px; color: var(--cyan-accent);">0</b><br><small style="color:var(--text-muted); font-size:9px;">VALID</small></div>
+                <div><b style="font-size: 14px;">0</b><br><small style="color:var(--text-muted); font-size:9px;">PENDING</small></div>
+                <div><b style="font-size: 14px; color: var(--cyan-accent);">0.00</b><br><small style="color:var(--text-muted); font-size:9px;">POWER</small></div>
+            </div>
+
+            <button class="btn-action" style="width:100%; background: var(--purple-accent); margin-bottom: 10px; padding: 14px;">🚀 Get Referrals</button>
+            <button class="btn-action btn-dark" style="width:100%; padding: 14px;">📋 Copy Link</button>
+        </div>
+    </div>
+
+    <div id="tab-tasks" class="tab-content">
+        <h2>Tasks</h2>
+        <div class="list-item">
+            <div class="user-lead-info">
+                <span style="font-size: 24px;">🎰</span>
+                <div><strong>Fruit Slots</strong><br><small style="color: var(--text-muted);">⚡ 0-25 POWER · Alle 30 Min</small></div>
+            </div>
+            <button class="btn-action" style="background: #f59e0b; padding: 6px 16px; border-radius: 8px;">Spin!</button>
+        </div>
+        <div class="list-item">
+            <div class="user-lead-info">
+                <span style="font-size: 24px;">🎲</span><div><strong>Daily Roll</strong><br><small style="color: var(--text-muted);">⚡ 5-50 POWER · Alle 24h</small></div>
+            </div>
+            <button class="btn-action" style="background: #f59e0b; padding: 6px 16px; border-radius: 8px;">Roll</button>
+        </div>
+    </div>
 
     <div class="modal-overlay" id="swap-modal">
         <div class="modal-box">
@@ -281,7 +460,7 @@
             </div>
 
             <div style="text-align: left; font-size: 12px; color: var(--text-muted); margin-bottom: 5px;">TON WALLET ADRESS:</div>
-            <input type="text" class="wallet-input" id="wallet-address" placeholder="UQb... oder deine Adresse eingeben">
+            <input type="text" class="wallet-input" id="wallet-address" placeholder="UQb... oder Adresse eingeben">
 
             <button class="btn-action" style="width:100%;" onclick="processWithdraw()">Continue →</button>
         </div>
@@ -305,6 +484,7 @@
         let pauseTimeLeft = 600; 
         let isMiningActive = true; 
 
+        // Main Loop
         setInterval(() => {
             const timerBtn = document.getElementById('timer-status-btn');
 
@@ -315,11 +495,11 @@
                     document.getElementById('balance-display').innerText = hashesMined.toFixed(8);
                     let estimatedTon = hashesMined * tonRate;
                     document.getElementById('ton-display').innerText = "≈ " + estimatedTon.toFixed(8) + " TON";
-                    timerBtn.innerText = "🕒 " + formatTime(miningTimeLeft);} else {
+                    timerBtn.innerText = "🕒 " + formatTime(miningTimeLeft);
+                } else {
                     isMiningActive = false;
                     pauseTimeLeft = 600;
-                    timerBtn.classList.add('pause-mode');
-                }
+                    timerBtn.classList.add('pause-mode');}
             } else {
                 if (pauseTimeLeft > 0) {
                     pauseTimeLeft--;
@@ -339,18 +519,15 @@
             return (h < 10 ? "0" : "") + h + ":" + (m < 10 ? "0" : "") + m + ":" + (s < 10 ? "0" : "") + s;
         }
 
-        // KORREKTUR: Videos geben jetzt +0.5 POWER statt Hashes!
+        // Ads + Power-Logik (+0.5 Power pro Klick)
         function watchVideo() {
             alert("📺 Video wird geladen... [Adsgram Werbung]");
-            
-            currentPower += 0.5; // Erhöht die Power-Stufe dauerhaft
+            currentPower += 0.5; 
             document.getElementById('power-display').innerText = currentPower.toFixed(1) + "K";
             
-            // Rechnet die Live-Box direkt hoch
             document.getElementById('stat-day').innerText = (0.00036 * currentPower).toFixed(5) + " TON";
             document.getElementById('stat-month').innerText = (0.01080 * currentPower).toFixed(5) + " TON";
             document.getElementById('stat-3months').innerText = (0.03240 * currentPower).toFixed(5) + " TON";
-            
             alert("✅ Video beendet! Deine Mining-Geschwindigkeit wurde um +0.5K POWER erhöht.");
         }
 
@@ -367,7 +544,6 @@
             document.getElementById('swap-modal').style.display = 'none';
         }
 
-        // KORREKTUR: Auszahlung ab 5.00000000 & Pflichtfeld für Wallet-Adresse
         function processWithdraw() {
             let addressInput = document.getElementById('wallet-address').value.trim();
 
@@ -380,7 +556,7 @@
                 let erhaltenesTon = hashesMined * tonRate;
                 alert("Erfolgreich! " + hashesMined.toFixed(8) + " Hashes wurden verarbeitet. " + erhaltenesTon.toFixed(6) + " TON werden an die Adresse '" + addressInput + "' gesendet!");
                 hashesMined = 0;
-                document.getElementById('wallet-address').value = ""; // Feld leeren
+                document.getElementById('wallet-address').value = ""; 
                 closeSwapModal();
             } else {
                 let rest = 5.00000000 - hashesMined;
@@ -392,8 +568,12 @@
             const tabs = ['shop', 'rank', 'power', 'team', 'tasks'];
             tabs.forEach(t => document.getElementById('tab-' + t).classList.remove('active'));
             document.getElementById('tab-' + tabName).classList.add('active');
+            
+            // Setze aktiven Navigations-Status
             const navItems = document.querySelectorAll('.nav-item');
             navItems.forEach(item => item.classList.remove('active'));
+            
+            // Sucht den geklickten Menüpunkt und markiert ihn blau
             event.currentTarget.classList.add('active');
         }
     </script>
