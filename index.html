@@ -406,21 +406,11 @@
             <div style="font-weight: bold; letter-spacing: 1px; font-size: 13px;">YOUR RANK</div>
             <div style="color: var(--cyan-accent); font-weight: bold; font-size: 16px;">#3059</div>
         </div>
-
-        <div style="color: var(--text-muted); font-size: 12px; font-weight: bold; margin: 15px 0 10px 5px;">ALL MINERS</div>
-
-        <div class="list-item">
-            <div class="user-lead-info">
-                <span style="color: var(--text-muted); font-weight: bold; width: 20px;">#4</span>
-                <div class="avatar" style="background: #10b981;">VM</div>
-                <div><strong>V🥦Grila 🐝Bee Empire</strong><br><small style="color: var(--text-muted);">@Vgrila</small></div>
-            </div>
-            <div style="color: var(--cyan-accent); font-weight: bold;">1.0M</div>
-        </div>
     </div>
 
     <div id="tab-team" class="tab-content">
-        <div class="power-card" style="text-align: left; background: var(--dark-card); border: 1px solid #131c2e;"><h1 style="font-size: 32px; font-weight: 800; margin: 0 0 20px 0; line-height: 1.2;">Your Referral<br>Rewards</h1>
+        <div class="power-card" style="text-align: left; background: var(--dark-card); border: 1px solid #131c2e;">
+            <h1 style="font-size: 32px; font-weight: 800; margin: 0 0 20px 0; line-height: 1.2;">Your Referral<br>Rewards</h1>
             
             <div class="ref-grid">
                 <div class="ref-box">
@@ -429,8 +419,7 @@
                     <small style="color: var(--text-muted); font-size: 9px;">POWER premium</small>
                 </div>
                 <div class="ref-box">
-                    <span style="font-size: 18px;">👤</span>
-                    <div style="font-weight: bold; margin-top: 5px; font-size: 14px;">+2,000</div>
+                    <span style="font-size: 18px;">👤</span><div style="font-weight: bold; margin-top: 5px; font-size: 14px;">+2,000</div>
                     <small style="color: var(--text-muted); font-size: 9px;">POWER per referral</small>
                 </div>
                 <div class="ref-box">
@@ -463,14 +452,6 @@
             </div>
             <button class="btn-action" id="task1-btn" style="background: #f59e0b; padding: 6px 16px; border-radius: 8px;" onclick="doTask('task1', 1.5)">Start</button>
         </div>
-
-        <div class="list-item">
-            <div class="user-lead-info">
-                <span style="font-size: 24px;">🎰</span>
-                <div><strong>Fruit Slots</strong><br><small style="color: var(--text-muted);">⚡ 0-25 POWER · Alle 30 Min</small></div>
-            </div>
-            <button class="btn-action" style="background: #f59e0b; padding: 6px 16px; border-radius: 8px;" onclick="alert('🎰 Slots drehen sich...')">Spin!</button>
-        </div>
     </div>
 
     <div class="modal-overlay" id="swap-modal">
@@ -479,13 +460,10 @@
             <div style="background:#0098ea; width:50px; height:50px; border-radius:50%; margin:auto; display:flex; align-items:center; justify-content:center; font-size:24px;">💎</div>
             <h3 style="margin-top:15px;">Swap HASHES → TON</h3>
             
-            <div style="background:rgba(0,0,0,0.2); padding:15px; border-radius:14px; text-align:left; font-size:14px; margin:15px 0; display:flex; flex-direction:column; gap:8px;"><div style="display:flex;">
+            <div style="background:rgba(0,0,0,0.2); padding:15px; border-radius:14px; text-align:left; font-size:14px; margin:15px 0; display:flex; flex-direction:column; gap:8px;">
+                <div style="display:flex;">
                     <span style="color:var(--text-muted);">Your balance:</span>
                     <span id="modal-balance" style="margin-left:auto; font-weight:bold;">0.00000000 HASHES</span>
-                </div>
-                <div style="display:flex;">
-                    <span style="color:var(--text-muted);">Rate:</span>
-                    <span style="margin-left:auto; color:var(--cyan-accent);">1,000 HASHES = 0.0144 TON</span>
                 </div>
             </div>
 
@@ -502,23 +480,21 @@
         <button class="nav-item active" id="nav-power-btn" onclick="switchTab('power')"><span class="nav-icon">⚡</span>Power</button>
         <button class="nav-item" onclick="switchTab('team')"><span class="nav-icon">👥</span>Team</button>
         <button class="nav-item" onclick="switchTab('tasks')"><span class="nav-icon">📋</span>Tasks</button>
-    </div>
-
-    <script>
+    </div><script>
         let hashesMined = 0.00000000;
         let currentPower = 2.0; 
         
-        // Etwas schnellere Basisgeschwindigkeit zum besseren Testen
-        const baseSpeed = 0.00000350; 
+        // Schnelle, spürbare Basisgeschwindigkeit
+        const baseSpeed = 0.00125430; 
         
-        // Kurs: 1000 HASHES = 0.01440000 TON
-        const tonRate = 0.01440000 / 1000; 
+        // NEU: Extrem schneller Kurs! Für jeden 1 HASH gibt es jetzt 0.01 TON
+        const tonRate = 0.01000000; 
 
         let miningTimeLeft = 18000; 
         let pauseTimeLeft = 600; 
         let isMiningActive = true; 
 
-        // Reparierter Loop
+        // Live Loop
         setInterval(() => {
             const timerBtn = document.getElementById('timer-status-btn');
 
@@ -526,11 +502,11 @@
                 if (miningTimeLeft > 0) {
                     miningTimeLeft--;
                     
-                    // Hashes hochzählen
+                    // Hashes erhöhen
                     hashesMined += (baseSpeed * currentPower);
                     document.getElementById('balance-display').innerText = hashesMined.toFixed(8);
                     
-                    // FIXED: Aktualisiert jetzt direkt das HTML-Element live mit jeder Sekunde!
+                    // TON berechnen und sofort aktualisieren
                     let liveTon = hashesMined * tonRate;
                     document.getElementById('ton-display').innerText = "≈ " + liveTon.toFixed(8) + " TON";
                     
@@ -561,8 +537,9 @@
 
         function updatePowerCards() {
             document.getElementById('power-display').innerText = currentPower.toFixed(1) + "K";
-            document.getElementById('stat-day').innerText = (0.00036 * currentPower).toFixed(5) + " TON";document.getElementById('stat-month').innerText = (0.01080 * currentPower).toFixed(5) + " TON";
-            document.getElementById('stat-3months').innerText = (0.03240 * currentPower).toFixed(5) + " TON";
+            document.getElementById('stat-day').innerText = (0.55 * currentPower).toFixed(5) + " TON";
+            document.getElementById('stat-month').innerText = (16.50 * currentPower).toFixed(5) + " TON";
+            document.getElementById('stat-3months').innerText = (49.50 * currentPower).toFixed(5) + " TON";
         }
 
         function watchVideo() {
@@ -603,9 +580,7 @@
             }
         }
 
-        function triggerSwapWithAd() { openSwapModal(); }
-
-        function openSwapModal() {
+        function triggerSwapWithAd() { openSwapModal(); }function openSwapModal() {
             document.getElementById('modal-balance').innerText = hashesMined.toFixed(8) + " HASHES";
             document.getElementById('swap-modal').style.display = 'flex';
         }
