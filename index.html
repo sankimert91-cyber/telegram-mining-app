@@ -484,10 +484,10 @@
         let hashesMined = 0.00000000;
         let currentPower = 2.0; 
         
-        // Schnelle, spürbare Basisgeschwindigkeit
-        const baseSpeed = 0.00125430; 
+        // OPTIMIERT: Angenehmes, realistisches Klick-Tempo
+        const baseSpeed = 0.00001550; 
         
-        // NEU: Extrem schneller Kurs! Für jeden 1 HASH gibt es jetzt 0.01 TON
+        // Umrechnung: 100 HASHES = ca. 1 TON
         const tonRate = 0.01000000; 
 
         let miningTimeLeft = 18000; 
@@ -502,11 +502,11 @@
                 if (miningTimeLeft > 0) {
                     miningTimeLeft--;
                     
-                    // Hashes erhöhen
+                    // Hashes erhöhen sich kontrolliert
                     hashesMined += (baseSpeed * currentPower);
                     document.getElementById('balance-display').innerText = hashesMined.toFixed(8);
                     
-                    // TON berechnen und sofort aktualisieren
+                    // TON wächst im perfekten, gleichmäßigen Rhythmus mit
                     let liveTon = hashesMined * tonRate;
                     document.getElementById('ton-display').innerText = "≈ " + liveTon.toFixed(8) + " TON";
                     
@@ -537,9 +537,9 @@
 
         function updatePowerCards() {
             document.getElementById('power-display').innerText = currentPower.toFixed(1) + "K";
-            document.getElementById('stat-day').innerText = (0.55 * currentPower).toFixed(5) + " TON";
-            document.getElementById('stat-month').innerText = (16.50 * currentPower).toFixed(5) + " TON";
-            document.getElementById('stat-3months').innerText = (49.50 * currentPower).toFixed(5) + " TON";
+            document.getElementById('stat-day').innerText = (0.00268 * currentPower).toFixed(5) + " TON";
+            document.getElementById('stat-month').innerText = (0.08040 * currentPower).toFixed(5) + " TON";
+            document.getElementById('stat-3months').innerText = (0.24120 * currentPower).toFixed(5) + " TON";
         }
 
         function watchVideo() {
@@ -593,6 +593,12 @@
             closeSwapModal();
         }
 
+        document.querySelectorAll('.nav-item').forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+            });
+        });
+
         function switchTab(tabName) {
             const tabs = ['shop', 'rank', 'power', 'team', 'tasks'];
             tabs.forEach(t => document.getElementById('tab-' + t).classList.remove('active'));
@@ -601,8 +607,9 @@
             const navItems = document.querySelectorAll('.nav-item');
             navItems.forEach(item => item.classList.remove('active'));
             
-            if (event && event.currentTarget) {
-                event.currentTarget.classList.add('active');
+            const activeNav = Array.from(navItems).find(item => item.getAttribute('onclick').includes(tabName));
+            if (activeNav) {
+                activeNav.classList.add('active');
             }
         }
     </script>
