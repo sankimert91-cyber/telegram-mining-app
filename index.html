@@ -507,16 +507,18 @@
     <script>
         let hashesMined = 0.00000000;
         let currentPower = 2.0; 
-        const baseSpeed = 0.00000002; 
         
-        // Exakte Rate aus deinem Screenshot: 1000 HASHES = 0.01440000 TON
+        // Etwas schnellere Basisgeschwindigkeit zum besseren Testen
+        const baseSpeed = 0.00000350; 
+        
+        // Kurs: 1000 HASHES = 0.01440000 TON
         const tonRate = 0.01440000 / 1000; 
 
         let miningTimeLeft = 18000; 
         let pauseTimeLeft = 600; 
         let isMiningActive = true; 
 
-        // Main Loop (Hier war der Rechenfehler behoben!)
+        // Reparierter Loop
         setInterval(() => {
             const timerBtn = document.getElementById('timer-status-btn');
 
@@ -524,13 +526,13 @@
                 if (miningTimeLeft > 0) {
                     miningTimeLeft--;
                     
-                    // Hashes erhöhen sich basierend auf der Power
+                    // Hashes hochzählen
                     hashesMined += (baseSpeed * currentPower);
                     document.getElementById('balance-display').innerText = hashesMined.toFixed(8);
                     
-                    // FIXED: Rechnet den TON-Schätzwert jetzt präzise und live hoch!
-                    let currentTonValue = hashesMined * tonRate;
-                    document.getElementById('ton-display').innerText = "≈ " + currentTonValue.toFixed(8) + " TON";
+                    // FIXED: Aktualisiert jetzt direkt das HTML-Element live mit jeder Sekunde!
+                    let liveTon = hashesMined * tonRate;
+                    document.getElementById('ton-display').innerText = "≈ " + liveTon.toFixed(8) + " TON";
                     
                     timerBtn.innerText = "🕒 " + formatTime(miningTimeLeft);
                 } else {
@@ -558,23 +560,27 @@
         }
 
         function updatePowerCards() {
-            document.getElementById('power-display').innerText = currentPower.toFixed(1) + "K";document.getElementById('stat-day').innerText = (0.00036 * currentPower).toFixed(5) + " TON";
-            document.getElementById('stat-month').innerText = (0.01080 * currentPower).toFixed(5) + " TON";
+            document.getElementById('power-display').innerText = currentPower.toFixed(1) + "K";
+            document.getElementById('stat-day').innerText = (0.00036 * currentPower).toFixed(5) + " TON";document.getElementById('stat-month').innerText = (0.01080 * currentPower).toFixed(5) + " TON";
             document.getElementById('stat-3months').innerText = (0.03240 * currentPower).toFixed(5) + " TON";
         }
 
         function watchVideo() {
-            alert("📺 Werbung wird simuliert...");
+            alert("📺 Werbung beendet!");
             currentPower += 0.5; 
             updatePowerCards();
         }
 
         function buyUpgrade(powerBoost, price) {
-            if (confirm("Upgrade für " + price.toFixed(2) + " TON kaufen?")) {
+            if (confirm("Upgrade kaufen?")) {
                 currentPower += powerBoost;
                 updatePowerCards();
             }
         }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            updatePowerCards();
+        });
 
         function inviteFriend() {
             let botUsername = "cryptoclawgame_bot"; 
@@ -627,4 +633,3 @@
     </script>
 </body>
 </html>
-let currentTonValue = hashesMined * tonRate;
