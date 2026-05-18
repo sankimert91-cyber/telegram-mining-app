@@ -3,125 +3,467 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crypto Mining App</title>
+    <title>Swap Mine Clone</title>
     <style>
+        :root {
+            --bg-color: #060b14;
+            --card-bg: linear-gradient(135deg, #6225e6 0%, #2b1175 100%);
+            --dark-card: #0e1624;
+            --text-color: #ffffff;
+            --text-muted: #6b7a99;
+            --cyan-accent: #1ec8ff;
+            --btn-blue: #0294b3;
+            --btn-disabled: #1b273a;
+        }
+
         body {
-            background-color: #0d1117;
-            color: white;
-            font-family: Arial, sans-serif;
-            text-align: center;
-            padding: 20px;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             margin: 0;
+            padding: 0;
+            padding-bottom: 80px;
+            user-select: none;
         }
-        .container {
-            max-width: 400px;
-            margin: auto;
-            background: #161b22;
-            padding: 20px;
-            border-radius: 15px;
-            box-shadow: 0px 4px 10px rgba(0,0,0,0.3);
+
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background-color: #09101d;
         }
-        .power-box {
-            background: #1f262e;
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .avatar {
+            width: 35px;
+            height: 35px;
+            background: #3b5998;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .tab-content {
+            display: none;
             padding: 15px;
-            border-radius: 10px;
-            margin-bottom: 20px;
+            max-width: 450px;
+            margin: auto;
         }
-        .balance {
-            font-size: 28px;
-            color: #00ffcc;
-            font-weight: bold;
-            margin: 20px 0;
+        .tab-content.active {
+            display: block;
         }
-        .info-text {
-            color: #8b949e;
-            font-size: 14px;
+
+        .power-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 25px 20px;
+            text-align: center;
+            box-shadow: 0 8px 20px rgba(98, 37, 230, 0.2);
+            margin-bottom: 15px;
+        }
+        .power-title {
+            font-size: 13px;
+            color: #bfa6ff;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        .power-value {
+            font-size: 46px;
+            font-weight: 800;
+            margin: 5px 0;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            padding: 10px 5px;
             margin-top: 15px;
-            margin-bottom: 25px;
+            font-size: 11px;
         }
-        button {
-            background: #00ffcc;
-            color: #0d1117;
-            border: none;
-            padding: 12px 24px;
-            font-size: 16px;
-            font-weight: bold;
-            border-radius: 8px;
-            cursor: pointer;
-            width: 100%;
-            margin-bottom: 10px;
+        .stat-box { border-right: 1px solid rgba(255,255,255,0.1); }
+        .stat-box:last-child { border-right: none; }
+        .stat-label { color: #a3aed0; text-transform: uppercase; font-size: 9px; margin-bottom: 3px;}
+
+        .card-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 15px;
         }
-        button:hover {
-            background: #00ccaa;
-        }
-        .btn-video {
-            background: #58a6ff;
+        .btn-action {
+            background: var(--btn-blue);
             color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 12px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 14px;
         }
-        .btn-video:hover {
-            background: #1f6feb;
+        .btn-dark {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .mining-section {
+            background: var(--dark-card);
+            border-radius: 20px;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid #131c2e;
+        }
+        .section-title {
+            font-size: 12px;
+            color: var(--text-muted);
+            letter-spacing: 1px;
+            font-weight: bold;
+        }
+        .hash-value {
+            font-size: 32px;
+            color: var(--cyan-accent);
+            font-weight: bold;
+            margin: 10px 0 5px 0;
+        }
+        .ton-estimate {
+            color: var(--text-muted);
+            font-size: 13px;
+            margin-bottom: 20px;
+        }.timer-btn {
+            width: 100%;
+            margin-bottom: 12px;
+            font-size: 16px;
+            background: var(--dark-card);
+            border: 1px solid var(--cyan-accent);
+            color: var(--cyan-accent);
+        }
+        .timer-btn.pause-mode {
+            border: 1px solid #ff4d4d;
+            color: #ff4d4d;
+        }
+
+        .item-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .list-item {
+            background: var(--dark-card);
+            padding: 15px;
+            border-radius: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid #131c2e;
+        }
+        .item-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .item-btn {
+            background: #ff9f00;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .bottom-nav {
+            position: fixed;
+            bottom: 0; left: 0; right: 0;
+            background: #09101d;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            border-top: 1px solid #131c2e;
+        }
+        .nav-item {
+            color: var(--text-muted);
+            font-size: 11px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            cursor: pointer;
+            background: none; border: none;
+            width: 20%;
+        }
+        .nav-item.active {
+            color: var(--cyan-accent);
+        }
+        .nav-icon { font-size: 20px; }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.8);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            z-index: 100;
+        }
+        .modal-box {
+            background: #0e1624;
+            border-radius: 24px;
+            padding: 25px;
+            width: 100%;
+            max-width: 360px;
+            text-align: center;
+            border: 1px solid #1f2c45;
+            position: relative;
+        }
+        .close-btn {
+            position: absolute;
+            top: 15px; right: 15px;
+            background: none; border: none; color: white; font-size: 20px; cursor: pointer;
         }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <h2>DEINE POWER</h2>
-    <div class="power-box">
-        <span style="font-size: 24px; color: #58a6ff;" id="power-display">1.0K</span><br>
-        <small style="color: #8b949e;">POWER</small>
+    <div class="top-bar">
+        <div class="user-info">
+            <div class="avatar">MV</div>
+            <span style="font-weight: bold;">MODA</span>
+        </div>
+        <div style="font-size: 20px;">🇬🇧</div>
     </div>
 
-    <div>HASHES MINED</div>
-    <div class="balance" id="balance-display">0.00000000</div>
+    <div id="tab-power" class="tab-content active">
+        <div class="power-card">
+            <div class="power-title">YOUR POWER</div>
+            <div class="power-value" id="power-display">2.0K</div>
+            <div style="color: #1ec8ff; font-weight: bold; font-size: 12px; letter-spacing: 1px;">POWER</div>
+            
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <div class="stat-label">DAY</div>
+                    <div id="stat-day">0.00072 TON</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label">MONTH</div>
+                    <div id="stat-month">0.02160 TON</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label">3 MONTHS</div>
+                    <div id="stat-3months">0.06480 TON</div>
+                </div>
+            </div>
 
-    <div class="info-text">
-        🔒 Mindestauszahlung: <strong>10.00000000 Hashes</strong>
+            <div class="card-buttons">
+                <button class="btn-action" onclick="switchTab('shop')">⚡ Add POWER</button>
+                <button class="btn-action btn-dark" onclick="watchVideo()">🎁 Free POWER</button>
+            </div>
+        </div><div class="mining-section">
+            <div class="section-title">⚙️ HASHES MINED</div>
+            <div class="hash-value" id="balance-display">0.00000000</div>
+            <div class="ton-estimate" id="ton-display">≈ 0.00000000 TON</div>
+
+            <button class="btn-action timer-btn" id="timer-status-btn" disabled>
+                🕒 05:00:00
+            </button>
+
+            <button class="btn-action" style="width: 100%; background: transparent; border: 2px solid #0294b3;" onclick="triggerSwapWithAd()">
+                🔂 SWAP HASHES
+            </button>
+        </div>
     </div>
 
-    <button class="btn-video" onclick="watchVideo()">📺 Video schauen (+0.5K Power)</button>
+    <div id="tab-shop" class="tab-content">
+        <h2>Shop</h2>
+        <div class="item-list">
+            <div class="list-item">
+                <div class="item-left">
+                    <div style="font-size:24px;">🚀</div>
+                    <div><strong>+100K POWER</strong><br><small style="color:var(--text-muted);">Dauerhafter Boost</small></div>
+                </div>
+                <button class="item-btn" style="background:var(--btn-blue);">0.85 TON</button>
+            </div>
+        </div>
+    </div>
 
-    <button onclick="claimHashes()">SWAP HASHES</button>
-</div>
+    <div id="tab-rank" class="tab-content">
+        <h2>Leaderboard</h2>
+        <div class="list-item" style="background: linear-gradient(90deg, #1f1147, #0e1624); margin-bottom: 15px;">
+            <div>YOUR RANK</div>
+            <div style="font-weight:bold; color:var(--cyan-accent);">#3059</div>
+        </div>
+        <div class="item-list">
+            <div class="list-item">
+                <div class="item-left">🥇 <strong>rease1312</strong></div>
+                <div style="color:var(--cyan-accent); font-weight:bold;">3.3M POWER</div>
+            </div>
+        </div>
+    </div>
 
-<script>
-    // Startwerte
-    let hashesMined = 0.00000000;
-    let currentPower = 1.0; // Repräsentiert 1.0K Power
-    
-    // Mining-Geschwindigkeit stark verlangsamt (vorher 0.00001234)
-    let miningSpeed = 0.00000005; 
+    <div id="tab-team" class="tab-content">
+        <h2>Your Referral Rewards</h2>
+        <div class="power-card" style="background: var(--dark-card); border: 1px solid #131c2e;">
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
+                <div style="background:rgba(255,255,255,0.02); padding:10px; border-radius:10px;">
+                    <small style="color:var(--text-muted);">Per Referral</small>
+                    <h3>+2,000</h3>
+                </div>
+            </div>
+            <button class="btn-action" style="width:100%; margin-top:15px;">🔗 Copy Link</button>
+        </div>
+    </div>
 
-    const balanceDisplay = document.getElementById('balance-display');
-    const powerDisplay = document.getElementById('power-display');
+    <div id="tab-tasks" class="tab-content">
+        <h2>Tasks</h2>
+        <div class="item-list">
+            <div class="list-item">
+                <div class="item-left">🎰 <div><strong>Fruit Slots</strong><br><small style="color:var(--text-muted);">Alle 30 Min</small></div></div>
+                <button class="item-btn">Spin!</button>
+            </div>
+        </div>
+    </div>
 
-    // Automatisches Mining jede Sekunde
-    setInterval(() => {
-        hashesMined += (miningSpeed * currentPower);
-        balanceDisplay.innerText = hashesMined.toFixed(8);
-    }, 1000);
+    <div class="modal-overlay" id="swap-modal">
+        <div class="modal-box">
+            <button class="close-btn" onclick="closeSwapModal()">×</button>
+            <div style="background:#0098ea; width:50px; height:50px; border-radius:50%; margin:auto; display:flex; align-items:center; justify-content:center; font-size:24px;">💎</div>
+            <h3 style="margin-top:15px;">Swap HASHES → TON</h3>
+            
+            <div style="background:rgba(0,0,0,0.2); padding:15px; border-radius:14px; text-align:left; font-size:14px; margin:20px 0; display:flex; flex-direction:column; gap:8px;">
+                <div style="display:flex;">
+                    <span style="color:var(--text-muted);">Your balance:</span>
+                    <span id="modal-balance" style="margin-left:auto; font-weight:bold;">0.00000000 HASHES</span>
+                </div>
+                <div style="display:flex;">
+                    <span style="color:var(--text-muted);">Rate:</span>
+                    <span style="margin-left:auto; color:var(--cyan-accent);">1,000 HASHES = 0.0144 TON</span></div>
+                <div style="border-top: 1px solid rgba(255,255,255,0.05); padding-top:8px; display:flex;">
+                    <span style="color:var(--text-muted);">Min. Auszahlung:</span>
+                    <span style="margin-left:auto; color:#ff4d4d; font-weight:bold;">10.00000000 HASHES</span>
+                </div>
+            </div>
 
-    // Funktion für den Video-Button
-    function watchVideo() {
-        // Hier wird später der echte Werbe-Code von Adsgram eingefügt.
-        // Aktuell simulieren wir den Erfolg:
-        alert("Video beendet! Du hast +0.5K Power erhalten.");
-        currentPower += 0.5;
-        powerDisplay.innerText = currentPower.toFixed(1) + "K";
-    }
+            <button class="btn-action" style="width:100%;" onclick="processWithdraw()">Continue →</button>
+        </div>
+    </div>
 
-    // Funktion für den Auszahlungs-Button mit der 10.0-Grenze
-    function claimHashes() {
-        if(hashesMined >= 10.00000000) {
-            alert("Auszahlung von " + hashesMined.toFixed(8) + " Hashes wurde beantragt!");
-            hashesMined = 0;
-            balanceDisplay.innerText = hashesMined.toFixed(8);
-        } else {
-            let fehlt = 10.00000000 - hashesMined;
-            alert("Du hast noch nicht genug Hashes! Dir fehlen noch " + fehlt.toFixed(8) + " Hashes für die Auszahlung.");
+    <div class="bottom-nav">
+        <button class="nav-item" onclick="switchTab('shop')"><span class="nav-icon">➕</span>Shop</button>
+        <button class="nav-item" onclick="switchTab('rank')"><span class="nav-icon">🏆</span>Rank</button>
+        <button class="nav-item active" id="nav-power-btn" onclick="switchTab('power')"><span class="nav-icon">⚡</span>Power</button>
+        <button class="nav-item" onclick="switchTab('team')"><span class="nav-icon">👥</span>Team</button>
+        <button class="nav-item" onclick="switchTab('tasks')"><span class="nav-icon">📋</span>Tasks</button>
+    </div>
+
+    <script>
+        // Start-Werte
+        let hashesMined = 0.00000000;
+        let currentPower = 2.0; // Start auf 2.0K laut Screenshot
+        const baseSpeed = 0.00000002; // Angenehme, langsame Geschwindigkeit
+        const tonRate = 0.01440000 / 1000;
+
+        // Timer Variablen (5 Stunden Mining = 18000 Sekunden)
+        let miningTimeLeft = 18000; 
+        let pauseTimeLeft = 600; // 10 Minuten Pause = 600 Sekunden
+        let isMiningActive = true; 
+
+        // Sekündlicher Haupt-Loop
+        setInterval(() => {
+            const timerBtn = document.getElementById('timer-status-btn');
+
+            if (isMiningActive) {
+                // 1. Mining läuft
+                if (miningTimeLeft > 0) {
+                    miningTimeLeft--;
+                    hashesMined += (baseSpeed * currentPower);
+                    
+                    // Anzeigen updaten
+                    document.getElementById('balance-display').innerText = hashesMined.toFixed(8);
+                    let estimatedTon = hashesMined * tonRate;
+                    document.getElementById('ton-display').innerText = "≈ " + estimatedTon.toFixed(8) + " TON";
+                    
+                    // Uhrzeit-Format berechnen (HH:MM:SS)
+                    timerBtn.innerText = "🕒 " + formatTime(miningTimeLeft);
+                } else {
+                    // 5 Stunden vorbei -> Switch auf Pause-Modus
+                    isMiningActive = false;
+                    pauseTimeLeft = 600; // Reset Pause auf 10 Min
+                    timerBtn.classList.add('pause-mode');
+                }
+            } else {
+                // 2. Pause läuft (Mining ist gestoppt)
+                if (pauseTimeLeft > 0) {
+                    pauseTimeLeft--;
+                    timerBtn.innerText = "🛑 Pause: " + formatTime(pauseTimeLeft);
+                } else {
+                    // 10 Minuten Pause vorbei -> Mining startet von vorn
+                    isMiningActive = true;
+                    miningTimeLeft = 18000; // Wieder 5 Stunden
+                    timerBtn.classList.remove('pause-mode');
+                }
+            }
+        }, 1000);
+
+        // Hilfsfunktion für die Uhrzeit-Formatiertun (z.B. 05:00:00)
+        function formatTime(seconds) {
+            let h = Math.floor(seconds / 3600);
+            let m = Math.floor((seconds % 3600) / 60);
+            let s = seconds % 60;
+            return (h < 10 ? "0" : "") + h + ":" + (m < 10 ? "0" : "") + m + ":" + (s < 10 ? "0" : "") + s;
         }
-    }
-</script>
 
+        // FUNKTION: 5.000 Hashes für Videos schauen
+        function watchVideo() {
+            alert("📺 Video wird geladen... [Adsgram Werbung]");
+            
+            // Simulation: Video fertig geschaut
+            hashesMined += 5.00000000; // Direkt auf das Guthaben addieren
+            document.getElementById('balance-display').innerText = hashesMined.toFixed(8);
+            
+            alert("✅ Video beendet! Du hast +5.00000000 Hashes erhalten.");
+        }// FUNKTION: Werbung auslösen BEVOR man swappen kann
+        function triggerSwapWithAd() {
+            alert("📺 Bevor du swappen kannst, schaue eine kurze Werbung...");
+            
+            // Nach der Werbung öffnet sich das Fenster
+            openSwapModal();
+        }
+
+        function openSwapModal() {
+            document.getElementById('modal-balance').innerText = hashesMined.toFixed(8) + " HASHES";
+            document.getElementById('swap-modal').style.display = 'flex';
+        }
+        function closeSwapModal() {
+            document.getElementById('swap-modal').style.display = 'none';
+        }
+
+        function processWithdraw() {
+            if (hashesMined >= 10.00000000) {
+                let erhaltenesTon = hashesMined * tonRate;
+                alert("Erfolgreich! " + hashesMined.toFixed(8) + " Hashes wurden in " + erhaltenesTon.toFixed(6) + " TON umgewandelt.");
+                hashesMined = 0;
+                closeSwapModal();
+            } else {
+                let rest = 10.00000000 - hashesMined;
+                alert("Fehler! Mindestauszahlung liegt bei 10.00000000 Hashes. Dir fehlen noch " + rest.toFixed(8) + " Hashes.");
+            }
+        }
+
+        function switchTab(tabName) {
+            const tabs = ['shop', 'rank', 'power', 'team', 'tasks'];
+            tabs.forEach(t => document.getElementById('tab-' + t).classList.remove('active'));
+            document.getElementById('tab-' + tabName).classList.add('active');
+            const navItems = document.querySelectorAll('.nav-item');
+            navItems.forEach(item => item.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+        }
+    </script>
 </body>
 </html>
