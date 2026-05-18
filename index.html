@@ -484,10 +484,10 @@
         let hashesMined = 0.00000000;
         let currentPower = 2.0; 
         
-        // OPTIMIERT: Angenehmes, realistisches Klick-Tempo
-        const baseSpeed = 0.00001550; 
+        // NOCH LANGSAMER: Die Zahlen verändern sich jetzt sehr ruhig und gleichmäßig
+        const baseSpeed = 0.00000018; 
         
-        // Umrechnung: 100 HASHES = ca. 1 TON
+        // Umrechnung bleibt perfekt synchron
         const tonRate = 0.01000000; 
 
         let miningTimeLeft = 18000; 
@@ -502,11 +502,11 @@
                 if (miningTimeLeft > 0) {
                     miningTimeLeft--;
                     
-                    // Hashes erhöhen sich kontrolliert
+                    // Ruhiger Anstieg der Hashes
                     hashesMined += (baseSpeed * currentPower);
                     document.getElementById('balance-display').innerText = hashesMined.toFixed(8);
                     
-                    // TON wächst im perfekten, gleichmäßigen Rhythmus mit
+                    // TON wächst passend mit
                     let liveTon = hashesMined * tonRate;
                     document.getElementById('ton-display').innerText = "≈ " + liveTon.toFixed(8) + " TON";
                     
@@ -537,9 +537,9 @@
 
         function updatePowerCards() {
             document.getElementById('power-display').innerText = currentPower.toFixed(1) + "K";
-            document.getElementById('stat-day').innerText = (0.00268 * currentPower).toFixed(5) + " TON";
-            document.getElementById('stat-month').innerText = (0.08040 * currentPower).toFixed(5) + " TON";
-            document.getElementById('stat-3months').innerText = (0.24120 * currentPower).toFixed(5) + " TON";
+            document.getElementById('stat-day').innerText = (0.00003 * currentPower).toFixed(5) + " TON";
+            document.getElementById('stat-month').innerText = (0.00093 * currentPower).toFixed(5) + " TON";
+            document.getElementById('stat-3months').innerText = (0.00280 * currentPower).toFixed(5) + " TON";
         }
 
         function watchVideo() {
