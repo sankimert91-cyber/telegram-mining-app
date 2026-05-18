@@ -33,6 +33,12 @@
             font-weight: bold;
             margin: 20px 0;
         }
+        .info-text {
+            color: #8b949e;
+            font-size: 14px;
+            margin-top: 15px;
+            margin-bottom: 25px;
+        }
         button {
             background: #00ffcc;
             color: #0d1117;
@@ -43,9 +49,17 @@
             border-radius: 8px;
             cursor: pointer;
             width: 100%;
+            margin-bottom: 10px;
         }
         button:hover {
             background: #00ccaa;
+        }
+        .btn-video {
+            background: #58a6ff;
+            color: white;
+        }
+        .btn-video:hover {
+            background: #1f6feb;
         }
     </style>
 </head>
@@ -54,12 +68,18 @@
 <div class="container">
     <h2>DEINE POWER</h2>
     <div class="power-box">
-        <span style="font-size: 24px; color: #58a6ff;">2.0K</span><br>
+        <span style="font-size: 24px; color: #58a6ff;" id="power-display">1.0K</span><br>
         <small style="color: #8b949e;">POWER</small>
     </div>
 
     <div>HASHES MINED</div>
     <div class="balance" id="balance-display">0.00000000</div>
+
+    <div class="info-text">
+        🔒 Mindestauszahlung: <strong>10.00000000 Hashes</strong>
+    </div>
+
+    <button class="btn-video" onclick="watchVideo()">📺 Video schauen (+0.5K Power)</button>
 
     <button onclick="claimHashes()">SWAP HASHES</button>
 </div>
@@ -67,25 +87,38 @@
 <script>
     // Startwerte
     let hashesMined = 0.00000000;
-    // Wie viel pro Sekunde dazukommt (Automatisches Mining)
-    const miningSpeed = 0.00001234; 
+    let currentPower = 1.0; // Repräsentiert 1.0K Power
+    
+    // Mining-Geschwindigkeit stark verlangsamt (vorher 0.00001234)
+    let miningSpeed = 0.00000005; 
 
     const balanceDisplay = document.getElementById('balance-display');
+    const powerDisplay = document.getElementById('power-display');
 
-    // Diese Funktion läuft AUTOMATISCH jede Sekunde
+    // Automatisches Mining jede Sekunde
     setInterval(() => {
-        hashesMined += miningSpeed;
+        hashesMined += (miningSpeed * currentPower);
         balanceDisplay.innerText = hashesMined.toFixed(8);
     }, 1000);
 
-    // Funktion für den Button
+    // Funktion für den Video-Button
+    function watchVideo() {
+        // Hier wird später der echte Werbe-Code von Adsgram eingefügt.
+        // Aktuell simulieren wir den Erfolg:
+        alert("Video beendet! Du hast +0.5K Power erhalten.");
+        currentPower += 0.5;
+        powerDisplay.innerText = currentPower.toFixed(1) + "K";
+    }
+
+    // Funktion für den Auszahlungs-Button mit der 10.0-Grenze
     function claimHashes() {
-        if(hashesMined > 0) {
-            alert("Du hast " + hashesMined.toFixed(8) + " Hashes erfolgreich geswappt!");
+        if(hashesMined >= 10.00000000) {
+            alert("Auszahlung von " + hashesMined.toFixed(8) + " Hashes wurde beantragt!");
             hashesMined = 0;
             balanceDisplay.innerText = hashesMined.toFixed(8);
         } else {
-            alert("Noch keine Hashes zum Swappen da!");
+            let fehlt = 10.00000000 - hashesMined;
+            alert("Du hast noch nicht genug Hashes! Dir fehlen noch " + fehlt.toFixed(8) + " Hashes für die Auszahlung.");
         }
     }
 </script>
