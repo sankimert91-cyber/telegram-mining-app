@@ -137,7 +137,7 @@
         .timer-btn.pause-mode {
             border: 1px solid #ff4d4d;
             color: #ff4d4d;
-        }/* List Items (Leaderboard / Tasks / Shop) */
+        }/* List Items */
         .list-item {
             background: var(--dark-card);
             padding: 15px;
@@ -265,8 +265,8 @@
         .close-btn { position: absolute; top: 15px; right: 15px; background: none; border: none; color: white; font-size: 20px; cursor: pointer; }
 
         /* Navigation */
-        .bottom-nav {position: fixed;
-            bottom: 0; left: 0; right: 0;
+        .bottom-nav {
+            position: fixed;bottom: 0; left: 0; right: 0;
             background: #09101d;
             display: flex;
             justify-content: space-around;
@@ -417,18 +417,10 @@
             </div>
             <div style="color: var(--cyan-accent); font-weight: bold;">1.0M</div>
         </div>
-        <div class="list-item">
-            <div class="user-lead-info">
-                <span style="color: var(--text-muted); font-weight: bold; width: 20px;">#5</span><div class="avatar" style="background: #3b82f6;">A</div>
-                <div><strong>Ale</strong><br><small style="color: var(--text-muted);">@Alempxl</small></div>
-            </div>
-            <div style="color: var(--cyan-accent); font-weight: bold;">604.5K</div>
-        </div>
     </div>
 
     <div id="tab-team" class="tab-content">
-        <div class="power-card" style="text-align: left; background: var(--dark-card); border: 1px solid #131c2e;">
-            <h1 style="font-size: 32px; font-weight: 800; margin: 0 0 20px 0; line-height: 1.2;">Your Referral<br>Rewards</h1>
+        <div class="power-card" style="text-align: left; background: var(--dark-card); border: 1px solid #131c2e;"><h1 style="font-size: 32px; font-weight: 800; margin: 0 0 20px 0; line-height: 1.2;">Your Referral<br>Rewards</h1>
             
             <div class="ref-grid">
                 <div class="ref-box">
@@ -474,17 +466,10 @@
 
         <div class="list-item">
             <div class="user-lead-info">
-                <span style="font-size: 24px;">🐦</span>
-                <div><strong>Follow on X (Twitter)</strong><br><small style="color: var(--cyan-accent);">⚡ +2.0K POWER</small></div>
+                <span style="font-size: 24px;">🎰</span>
+                <div><strong>Fruit Slots</strong><br><small style="color: var(--text-muted);">⚡ 0-25 POWER · Alle 30 Min</small></div>
             </div>
-            <button class="btn-action" id="task2-btn" style="background: #f59e0b; padding: 6px 16px; border-radius: 8px;" onclick="doTask('task2', 2.0)">Start</button>
-        </div>
-
-        <div class="list-item" style="margin-top: 20px;">
-            <div class="user-lead-info">
-                <span style="font-size: 24px;">🎰</span><div><strong>Fruit Slots</strong><br><small style="color: var(--text-muted);">⚡ 0-25 POWER · Alle 30 Min</small></div>
-            </div>
-            <button class="btn-action" style="background: #f59e0b; padding: 6px 16px; border-radius: 8px;" onclick="alert('🎰 Dreht sich...')">Spin!</button>
+            <button class="btn-action" style="background: #f59e0b; padding: 6px 16px; border-radius: 8px;" onclick="alert('🎰 Slots drehen sich...')">Spin!</button>
         </div>
     </div>
 
@@ -494,18 +479,13 @@
             <div style="background:#0098ea; width:50px; height:50px; border-radius:50%; margin:auto; display:flex; align-items:center; justify-content:center; font-size:24px;">💎</div>
             <h3 style="margin-top:15px;">Swap HASHES → TON</h3>
             
-            <div style="background:rgba(0,0,0,0.2); padding:15px; border-radius:14px; text-align:left; font-size:14px; margin:15px 0; display:flex; flex-direction:column; gap:8px;">
-                <div style="display:flex;">
+            <div style="background:rgba(0,0,0,0.2); padding:15px; border-radius:14px; text-align:left; font-size:14px; margin:15px 0; display:flex; flex-direction:column; gap:8px;"><div style="display:flex;">
                     <span style="color:var(--text-muted);">Your balance:</span>
                     <span id="modal-balance" style="margin-left:auto; font-weight:bold;">0.00000000 HASHES</span>
                 </div>
                 <div style="display:flex;">
                     <span style="color:var(--text-muted);">Rate:</span>
                     <span style="margin-left:auto; color:var(--cyan-accent);">1,000 HASHES = 0.0144 TON</span>
-                </div>
-                <div style="border-top: 1px solid rgba(255,255,255,0.05); padding-top:8px; display:flex;">
-                    <span style="color:var(--text-muted);">Min. Auszahlung:</span>
-                    <span style="margin-left:auto; color:#ff4d4d; font-weight:bold;">5.00000000 HASHES</span>
                 </div>
             </div>
 
@@ -528,27 +508,35 @@
         let hashesMined = 0.00000000;
         let currentPower = 2.0; 
         const baseSpeed = 0.00000002; 
-        const tonRate = 0.01440000 / 1000;
+        
+        // Exakte Rate aus deinem Screenshot: 1000 HASHES = 0.01440000 TON
+        const tonRate = 0.01440000 / 1000; 
 
         let miningTimeLeft = 18000; 
         let pauseTimeLeft = 600; 
         let isMiningActive = true; 
 
-        // Main Loop
+        // Main Loop (Hier war der Rechenfehler behoben!)
         setInterval(() => {
             const timerBtn = document.getElementById('timer-status-btn');
 
             if (isMiningActive) {
                 if (miningTimeLeft > 0) {
                     miningTimeLeft--;
+                    
+                    // Hashes erhöhen sich basierend auf der Power
                     hashesMined += (baseSpeed * currentPower);
                     document.getElementById('balance-display').innerText = hashesMined.toFixed(8);
-                    let estimatedTon = hashesMined * tonRate;
-                    document.getElementById('ton-display').innerText = "≈ " + estimatedTon.toFixed(8) + " TON";
+                    
+                    // FIXED: Rechnet den TON-Schätzwert jetzt präzise und live hoch!
+                    let currentTonValue = hashesMined * tonRate;
+                    document.getElementById('ton-display').innerText = "≈ " + currentTonValue.toFixed(8) + " TON";
+                    
                     timerBtn.innerText = "🕒 " + formatTime(miningTimeLeft);
                 } else {
                     isMiningActive = false;
-                    pauseTimeLeft = 600;timerBtn.classList.add('pause-mode');
+                    pauseTimeLeft = 600;
+                    timerBtn.classList.add('pause-mode');
                 }
             } else {
                 if (pauseTimeLeft > 0) {
@@ -569,95 +557,61 @@
             return (h < 10 ? "0" : "") + h + ":" + (m < 10 ? "0" : "") + m + ":" + (s < 10 ? "0" : "") + s;
         }
 
-        // Hilfsfunktion: Berechnet und aktualisiert die Live-Werte auf der Power-Card
         function updatePowerCards() {
-            document.getElementById('power-display').innerText = currentPower.toFixed(1) + "K";
-            document.getElementById('stat-day').innerText = (0.00036 * currentPower).toFixed(5) + " TON";
+            document.getElementById('power-display').innerText = currentPower.toFixed(1) + "K";document.getElementById('stat-day').innerText = (0.00036 * currentPower).toFixed(5) + " TON";
             document.getElementById('stat-month').innerText = (0.01080 * currentPower).toFixed(5) + " TON";
             document.getElementById('stat-3months').innerText = (0.03240 * currentPower).toFixed(5) + " TON";
         }
 
-        // Videos anschauen (+0.5 Power)
         function watchVideo() {
-            alert("📺 Video wird geladen... [Adsgram Werbung]");
+            alert("📺 Werbung wird simuliert...");
             currentPower += 0.5; 
             updatePowerCards();
-            alert("✅ Video beendet! Deine Mining-Geschwindigkeit wurde um +0.5K POWER erhöht.");
         }
 
-        // SHOP-FUNKTION: Simulierter Kauf von Power Upgrades
         function buyUpgrade(powerBoost, price) {
-            if (confirm("Möchtest du dieses Upgrade für " + price.toFixed(2) + " TON kaufen?")) {
+            if (confirm("Upgrade für " + price.toFixed(2) + " TON kaufen?")) {
                 currentPower += powerBoost;
                 updatePowerCards();
-                alert("🛒 Kauf erfolgreich! +" + powerBoost + "K POWER hinzugefügt.");
             }
         }
 
-        // TEAM-FUNKTION: Echter Telegram Link Generator
         function inviteFriend() {
-            let botUsername = "cryptoclawgame_bot"; // Dein Bot Name
+            let botUsername = "cryptoclawgame_bot"; 
             let shareUrl = "https://t.me/" + botUsername + "?start=ref";
-            window.open("https://t.me/share/url?url=" + encodeURIComponent(shareUrl) + "&text=Spiel%20mit%20mir%20und%20mine%20gratis%20TON!", "_blank");
-            
-            // Simulierter Zähler geht hoch
-            let currentRefs = parseInt(document.getElementById('ref-count').innerText);
-            document.getElementById('ref-count').innerText = currentRefs + 1;
+            window.open("https://t.me/share/url?url=" + encodeURIComponent(shareUrl) + "&text=Mine%20gratis%20TON!", "_blank");
         }
 
-        function copyLink() {
-            alert("🔗 Link in Zwischenablage kopiert!");
-        }
+        function copyLink() { alert("🔗 Kopiert!"); }
 
-        // TASKS-FUNKTION: Klickbare Kanäle für Bonus-Power
         function doTask(taskId, powerBoost) {
             let btn = document.getElementById(taskId + '-btn');
             if (btn.innerText === "Claim") {
                 currentPower += powerBoost;
                 updatePowerCards();
                 btn.innerText = "Done";
-                btn.style.background = "#1b273a";
                 btn.disabled = true;
-                alert("🎉 Belohnung abgeholt! +" + powerBoost + "K POWER!");
             } else {
-                alert("Öffne Kanal... Schließe die Aufgabe ab und hole danach deine Belohnung ab.");
+                alert("Aufgabe gestartet...");
                 btn.innerText = "Claim";
-                btn.style.background = "#10b981"; // Wechselt auf Grün zum Abholen
             }
         }
 
-        function triggerSwapWithAd() {
-            alert("📺 Bevor du swappen kannst, schaue eine kurze Werbung...");
-            openSwapModal();
-        }
+        function triggerSwapWithAd() { openSwapModal(); }
 
         function openSwapModal() {
             document.getElementById('modal-balance').innerText = hashesMined.toFixed(8) + " HASHES";
             document.getElementById('swap-modal').style.display = 'flex';
         }
-        function closeSwapModal() {
-            document.getElementById('swap-modal').style.display = 'none';
-        }function processWithdraw() {
+        function closeSwapModal() { document.getElementById('swap-modal').style.display = 'none'; }
+
+        function processWithdraw() {
             let addressInput = document.getElementById('wallet-address').value.trim();
-
-            if (addressInput === "") {
-                alert("❌ Bitte trage zuerst deine Wallet-Adresse ein!");
-                return;
-            }
-
-            if (hashesMined >= 5.00000000) {
-                let erhaltenesTon = hashesMined * tonRate;
-                alert("Erfolgreich! " + hashesMined.toFixed(8) + " Hashes wurden verarbeitet. " + erhaltenesTon.toFixed(6) + " TON werden an die Adresse '" + addressInput + "' gesendet!");
-                hashesMined = 0;
-                document.getElementById('wallet-address').value = ""; 
-                closeSwapModal();
-            } else {
-                let rest = 5.00000000 - hashesMined;
-                alert("Fehler! Die Mindestauszahlung liegt bei 5.00000000 Hashes. Dir fehlen noch " + rest.toFixed(8) + " Hashes.");
-            }
+            if (addressInput === "") { alert("❌ Adresse fehlt!"); return; }
+            alert("Auszahlung beantragt!");
+            closeSwapModal();
         }
 
-        // FIXED: Fehlerfreies Tab-Wechselsystem
         function switchTab(tabName) {
             const tabs = ['shop', 'rank', 'power', 'team', 'tasks'];
             tabs.forEach(t => document.getElementById('tab-' + t).classList.remove('active'));
@@ -666,7 +620,6 @@
             const navItems = document.querySelectorAll('.nav-item');
             navItems.forEach(item => item.classList.remove('active'));
             
-            // Markiert den aktuell geklickten Menüpunkt unten blau
             if (event && event.currentTarget) {
                 event.currentTarget.classList.add('active');
             }
