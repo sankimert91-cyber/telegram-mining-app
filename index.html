@@ -137,7 +137,7 @@
         .timer-btn.pause-mode {
             border: 1px solid #ff4d4d;
             color: #ff4d4d;
-        }/* List Items (Leaderboard / Tasks) */
+        }/* List Items (Leaderboard / Tasks / Shop) */
         .list-item {
             background: var(--dark-card);
             padding: 15px;
@@ -152,13 +152,6 @@
             display: flex;
             align-items: center;
             gap: 12px;
-        }
-        .lead-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid #1f2c45;
         }
 
         /* Leaderboard Podiums */
@@ -233,22 +226,6 @@
             text-align: center;
         }
 
-        /* Shop Grid */
-        .shop-stats {
-            background: rgba(0,0,0,0.3);
-            border-radius: 14px;
-            padding: 20px;
-            text-align: left;
-            margin: 20px 0;
-        }
-        .shop-row {
-            display: flex;
-            justify-content: space-between;
-            padding: 10px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-        }
-        .shop-row:last-child { border-bottom: none; }
-
         /* Inputs & Modals */
         .wallet-input {
             width: 100%;
@@ -268,7 +245,8 @@
         .modal-overlay {
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0,0,0,0.8);display: none;
+            background: rgba(0,0,0,0.8);
+            display: none;
             align-items: center;
             justify-content: center;
             padding: 20px;
@@ -287,8 +265,7 @@
         .close-btn { position: absolute; top: 15px; right: 15px; background: none; border: none; color: white; font-size: 20px; cursor: pointer; }
 
         /* Navigation */
-        .bottom-nav {
-            position: fixed;
+        .bottom-nav {position: fixed;
             bottom: 0; left: 0; right: 0;
             background: #09101d;
             display: flex;
@@ -365,11 +342,74 @@
     </div>
 
     <div id="tab-shop" class="tab-content">
-        <center>
-            <div style="font-size: 50px; margin-top: 20px;">⚙️</div>
-            <h1 style="font-size: 42px; margin: 10px 0 5px 0; font-weight: 800;">100K</h1>
-            <div style="color: var(--cyan-accent); font-weight: bold; letter-spacing: 2px; font-size: 14px; margin-bottom: 20px;">POWER</div>
-        </center><div class="list-item">
+        <h2 style="margin-bottom: 5px;">Mining Shop</h2>
+        <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 20px;">Kaufe Upgrades, um dauerhaft schneller zu minen.</p>
+        
+        <div class="list-item">
+            <div class="user-lead-info">
+                <span style="font-size: 24px;">🥉</span>
+                <div><strong>Bronze Miner Upgrade</strong><br><small style="color: var(--cyan-accent);">+5.0K POWER</small></div>
+            </div>
+            <button class="btn-action" style="padding: 8px 12px; font-size:12px;" onclick="buyUpgrade(5.0, 0.1)">0.10 TON</button>
+        </div>
+
+        <div class="list-item">
+            <div class="user-lead-info">
+                <span style="font-size: 24px;">🥈</span>
+                <div><strong>Silber Miner Upgrade</strong><br><small style="color: var(--cyan-accent);">+25.0K POWER</small></div>
+            </div>
+            <button class="btn-action" style="padding: 8px 12px; font-size:12px;" onclick="buyUpgrade(25.0, 0.4)">0.40 TON</button>
+        </div><div class="list-item">
+            <div class="user-lead-info">
+                <span style="font-size: 24px;">🥇</span>
+                <div><strong>Gold Miner Upgrade</strong><br><small style="color: var(--cyan-accent);">+100.0K POWER</small></div>
+            </div>
+            <button class="btn-action" style="padding: 8px 12px; font-size:12px;" onclick="buyUpgrade(100.0, 0.85)">0.85 TON</button>
+        </div>
+    </div>
+
+    <div id="tab-rank" class="tab-content">
+        <div class="podium-container">
+            <div class="podium-user">
+                <div class="podium-avatar-wrapper">
+                    <img class="podium-avatar" style="border-color: #cbd5e1;" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150" alt="User 2">
+                    <div class="podium-badge" style="background: #cbd5e1; color: black;">🥈</div>
+                </div>
+                <div style="font-weight: bold; margin-top: 5px; font-size: 14px;">Bitch</div>
+                <div style="font-size: 11px; color: var(--cyan-accent);">2.9M POWER</div>
+                <div class="podium-box" style="background: linear-gradient(180deg, #334155, #0f172a); color: #cbd5e1;">#2</div>
+            </div>
+
+            <div class="podium-user" style="width: 35%;">
+                <div class="podium-avatar-wrapper">
+                    <span class="podium-crown">👑</span>
+                    <img class="podium-avatar" style="width: 80px; height: 80px; border-color: #f59e0b;" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150" alt="User 1">
+                    <div class="podium-badge" style="background: #f59e0b; width: 24px; height: 24px;">🥇</div>
+                </div>
+                <div style="font-weight: bold; margin-top: 5px; font-size: 15px;">®e@se⁰³</div>
+                <div style="font-size: 11px; color: var(--cyan-accent);">3.3M POWER</div>
+                <div class="podium-box" style="background: linear-gradient(180deg, #eab308, #ca8a04); color: white;">#1</div>
+            </div>
+
+            <div class="podium-user">
+                <div class="podium-avatar-wrapper">
+                    <img class="podium-avatar" style="border-color: #b45309;" src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=150" alt="User 3">
+                    <div class="podium-badge" style="background: #b45309;">🥉</div>
+                </div>
+                <div style="font-weight: bold; margin-top: 5px; font-size: 14px;">Favour</div>
+                <div style="font-size: 11px; color: var(--cyan-accent);">2.5M POWER</div>
+                <div class="podium-box" style="background: linear-gradient(180deg, #7c2d12, #451a03); color: #b45309;">#3</div>
+            </div>
+        </div>
+
+        <div class="list-item" style="background: #091324; border: 1px solid var(--cyan-accent);">
+            <div style="font-weight: bold; letter-spacing: 1px; font-size: 13px;">YOUR RANK</div>
+            <div style="color: var(--cyan-accent); font-weight: bold; font-size: 16px;">#3059</div>
+        </div>
+
+        <div style="color: var(--text-muted); font-size: 12px; font-weight: bold; margin: 15px 0 10px 5px;">ALL MINERS</div>
+
+        <div class="list-item">
             <div class="user-lead-info">
                 <span style="color: var(--text-muted); font-weight: bold; width: 20px;">#4</span>
                 <div class="avatar" style="background: #10b981;">VM</div>
@@ -379,8 +419,7 @@
         </div>
         <div class="list-item">
             <div class="user-lead-info">
-                <span style="color: var(--text-muted); font-weight: bold; width: 20px;">#5</span>
-                <div class="avatar" style="background: #3b82f6;">A</div>
+                <span style="color: var(--text-muted); font-weight: bold; width: 20px;">#5</span><div class="avatar" style="background: #3b82f6;">A</div>
                 <div><strong>Ale</strong><br><small style="color: var(--text-muted);">@Alempxl</small></div>
             </div>
             <div style="color: var(--cyan-accent); font-weight: bold;">604.5K</div>
@@ -410,31 +449,42 @@
             </div>
 
             <div class="ref-stats-bar">
-                <div><b style="font-size: 14px;">0</b><br><small style="color:var(--text-muted); font-size:9px;">REFERRED</small></div>
-                <div><b style="font-size: 14px; color: var(--cyan-accent);">0</b><br><small style="color:var(--text-muted); font-size:9px;">VALID</small></div>
-                <div><b style="font-size: 14px;">0</b><br><small style="color:var(--text-muted); font-size:9px;">PENDING</small></div>
-                <div><b style="font-size: 14px; color: var(--cyan-accent);">0.00</b><br><small style="color:var(--text-muted); font-size:9px;">POWER</small></div>
+                <div><b id="ref-count">0</b><br><small style="color:var(--text-muted); font-size:9px;">REFERRED</small></div>
+                <div><b style="color: var(--cyan-accent);">0</b><br><small style="color:var(--text-muted); font-size:9px;">VALID</small></div>
+                <div><b>0</b><br><small style="color:var(--text-muted); font-size:9px;">PENDING</small></div>
+                <div><b style="color: var(--cyan-accent);">0.00</b><br><small style="color:var(--text-muted); font-size:9px;">POWER</small></div>
             </div>
 
-            <button class="btn-action" style="width:100%; background: var(--purple-accent); margin-bottom: 10px; padding: 14px;">🚀 Get Referrals</button>
-            <button class="btn-action btn-dark" style="width:100%; padding: 14px;">📋 Copy Link</button>
+            <button class="btn-action" style="width:100%; background: var(--purple-accent); margin-bottom: 10px; padding: 14px;" onclick="inviteFriend()">🚀 Get Referrals</button>
+            <button class="btn-action btn-dark" style="width:100%; padding: 14px;" onclick="copyLink()">📋 Copy Link</button>
         </div>
     </div>
 
     <div id="tab-tasks" class="tab-content">
         <h2>Tasks</h2>
+        <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 20px;">Erledige Klick-Aufgaben für gratis Bonus-Geschwindigkeit!</p>
+
         <div class="list-item">
             <div class="user-lead-info">
-                <span style="font-size: 24px;">🎰</span>
-                <div><strong>Fruit Slots</strong><br><small style="color: var(--text-muted);">⚡ 0-25 POWER · Alle 30 Min</small></div>
+                <span style="font-size: 24px;">📢</span>
+                <div><strong>Join Telegram Channel</strong><br><small style="color: var(--cyan-accent);">⚡ +1.5K POWER</small></div>
             </div>
-            <button class="btn-action" style="background: #f59e0b; padding: 6px 16px; border-radius: 8px;">Spin!</button>
+            <button class="btn-action" id="task1-btn" style="background: #f59e0b; padding: 6px 16px; border-radius: 8px;" onclick="doTask('task1', 1.5)">Start</button>
         </div>
+
         <div class="list-item">
             <div class="user-lead-info">
-                <span style="font-size: 24px;">🎲</span><div><strong>Daily Roll</strong><br><small style="color: var(--text-muted);">⚡ 5-50 POWER · Alle 24h</small></div>
+                <span style="font-size: 24px;">🐦</span>
+                <div><strong>Follow on X (Twitter)</strong><br><small style="color: var(--cyan-accent);">⚡ +2.0K POWER</small></div>
             </div>
-            <button class="btn-action" style="background: #f59e0b; padding: 6px 16px; border-radius: 8px;">Roll</button>
+            <button class="btn-action" id="task2-btn" style="background: #f59e0b; padding: 6px 16px; border-radius: 8px;" onclick="doTask('task2', 2.0)">Start</button>
+        </div>
+
+        <div class="list-item" style="margin-top: 20px;">
+            <div class="user-lead-info">
+                <span style="font-size: 24px;">🎰</span><div><strong>Fruit Slots</strong><br><small style="color: var(--text-muted);">⚡ 0-25 POWER · Alle 30 Min</small></div>
+            </div>
+            <button class="btn-action" style="background: #f59e0b; padding: 6px 16px; border-radius: 8px;" onclick="alert('🎰 Dreht sich...')">Spin!</button>
         </div>
     </div>
 
@@ -498,8 +548,8 @@
                     timerBtn.innerText = "🕒 " + formatTime(miningTimeLeft);
                 } else {
                     isMiningActive = false;
-                    pauseTimeLeft = 600;
-                    timerBtn.classList.add('pause-mode');}
+                    pauseTimeLeft = 600;timerBtn.classList.add('pause-mode');
+                }
             } else {
                 if (pauseTimeLeft > 0) {
                     pauseTimeLeft--;
@@ -519,16 +569,61 @@
             return (h < 10 ? "0" : "") + h + ":" + (m < 10 ? "0" : "") + m + ":" + (s < 10 ? "0" : "") + s;
         }
 
-        // Ads + Power-Logik (+0.5 Power pro Klick)
-        function watchVideo() {
-            alert("📺 Video wird geladen... [Adsgram Werbung]");
-            currentPower += 0.5; 
+        // Hilfsfunktion: Berechnet und aktualisiert die Live-Werte auf der Power-Card
+        function updatePowerCards() {
             document.getElementById('power-display').innerText = currentPower.toFixed(1) + "K";
-            
             document.getElementById('stat-day').innerText = (0.00036 * currentPower).toFixed(5) + " TON";
             document.getElementById('stat-month').innerText = (0.01080 * currentPower).toFixed(5) + " TON";
             document.getElementById('stat-3months').innerText = (0.03240 * currentPower).toFixed(5) + " TON";
+        }
+
+        // Videos anschauen (+0.5 Power)
+        function watchVideo() {
+            alert("📺 Video wird geladen... [Adsgram Werbung]");
+            currentPower += 0.5; 
+            updatePowerCards();
             alert("✅ Video beendet! Deine Mining-Geschwindigkeit wurde um +0.5K POWER erhöht.");
+        }
+
+        // SHOP-FUNKTION: Simulierter Kauf von Power Upgrades
+        function buyUpgrade(powerBoost, price) {
+            if (confirm("Möchtest du dieses Upgrade für " + price.toFixed(2) + " TON kaufen?")) {
+                currentPower += powerBoost;
+                updatePowerCards();
+                alert("🛒 Kauf erfolgreich! +" + powerBoost + "K POWER hinzugefügt.");
+            }
+        }
+
+        // TEAM-FUNKTION: Echter Telegram Link Generator
+        function inviteFriend() {
+            let botUsername = "cryptoclawgame_bot"; // Dein Bot Name
+            let shareUrl = "https://t.me/" + botUsername + "?start=ref";
+            window.open("https://t.me/share/url?url=" + encodeURIComponent(shareUrl) + "&text=Spiel%20mit%20mir%20und%20mine%20gratis%20TON!", "_blank");
+            
+            // Simulierter Zähler geht hoch
+            let currentRefs = parseInt(document.getElementById('ref-count').innerText);
+            document.getElementById('ref-count').innerText = currentRefs + 1;
+        }
+
+        function copyLink() {
+            alert("🔗 Link in Zwischenablage kopiert!");
+        }
+
+        // TASKS-FUNKTION: Klickbare Kanäle für Bonus-Power
+        function doTask(taskId, powerBoost) {
+            let btn = document.getElementById(taskId + '-btn');
+            if (btn.innerText === "Claim") {
+                currentPower += powerBoost;
+                updatePowerCards();
+                btn.innerText = "Done";
+                btn.style.background = "#1b273a";
+                btn.disabled = true;
+                alert("🎉 Belohnung abgeholt! +" + powerBoost + "K POWER!");
+            } else {
+                alert("Öffne Kanal... Schließe die Aufgabe ab und hole danach deine Belohnung ab.");
+                btn.innerText = "Claim";
+                btn.style.background = "#10b981"; // Wechselt auf Grün zum Abholen
+            }
         }
 
         function triggerSwapWithAd() {
@@ -542,9 +637,7 @@
         }
         function closeSwapModal() {
             document.getElementById('swap-modal').style.display = 'none';
-        }
-
-        function processWithdraw() {
+        }function processWithdraw() {
             let addressInput = document.getElementById('wallet-address').value.trim();
 
             if (addressInput === "") {
@@ -564,17 +657,19 @@
             }
         }
 
+        // FIXED: Fehlerfreies Tab-Wechselsystem
         function switchTab(tabName) {
             const tabs = ['shop', 'rank', 'power', 'team', 'tasks'];
             tabs.forEach(t => document.getElementById('tab-' + t).classList.remove('active'));
             document.getElementById('tab-' + tabName).classList.add('active');
             
-            // Setze aktiven Navigations-Status
             const navItems = document.querySelectorAll('.nav-item');
             navItems.forEach(item => item.classList.remove('active'));
             
-            // Sucht den geklickten Menüpunkt und markiert ihn blau
-            event.currentTarget.classList.add('active');
+            // Markiert den aktuell geklickten Menüpunkt unten blau
+            if (event && event.currentTarget) {
+                event.currentTarget.classList.add('active');
+            }
         }
     </script>
 </body>
