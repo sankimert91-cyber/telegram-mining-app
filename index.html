@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crypto Mining App</title>
+    <style>
+        body {
+            background-color: #0d1117;
+            color: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+            margin: 0;
+        }
+        .container {
+            max-width: 400px;
+            margin: auto;
+            background: #161b22;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0px 4px 10px rgba(0,0,0,0.3);
+        }
+        .power-box {
+            background: #1f262e;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        .balance {
+            font-size: 28px;
+            color: #00ffcc;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+        button {
+            background: #00ffcc;
+            color: #0d1117;
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+        }
+        button:hover {
+            background: #00ccaa;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>DEINE POWER</h2>
+    <div class="power-box">
+        <span style="font-size: 24px; color: #58a6ff;">2.0K</span><br>
+        <small style="color: #8b949e;">POWER</small>
+    </div>
+
+    <div>HASHES MINED</div>
+    <div class="balance" id="balance-display">0.00000000</div>
+
+    <button onclick="claimHashes()">SWAP HASHES</button>
+</div>
+
+<script>
+    // Startwerte
+    let hashesMined = 0.00000000;
+    // Wie viel pro Sekunde dazukommt (Automatisches Mining)
+    const miningSpeed = 0.00001234; 
+
+    const balanceDisplay = document.getElementById('balance-display');
+
+    // Diese Funktion läuft AUTOMATISCH jede Sekunde
+    setInterval(() => {
+        hashesMined += miningSpeed;
+        balanceDisplay.innerText = hashesMined.toFixed(8);
+    }, 1000);
+
+    // Funktion für den Button
+    function claimHashes() {
+        if(hashesMined > 0) {
+            alert("Du hast " + hashesMined.toFixed(8) + " Hashes erfolgreich geswappt!");
+            hashesMined = 0;
+            balanceDisplay.innerText = hashesMined.toFixed(8);
+        } else {
+            alert("Noch keine Hashes zum Swappen da!");
+        }
+    }
+</script>
+
+</body>
+</html>
